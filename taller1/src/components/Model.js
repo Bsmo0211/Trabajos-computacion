@@ -60,14 +60,14 @@ const Model = () => {
         scene.add(lightbehind);
 
         renderer.render(scene, camera);
-        const animate = () => {
-
-            controls.update();
-            renderer.render(scene, camera)
-            requestAnimationFrame(animate)
-        }
-
-        animate();
+        /*  const animate = () => {
+ 
+             controls.update();
+             renderer.render(scene, camera)
+             requestAnimationFrame(animate)
+         }
+ 
+         animate(); */
         return () => {
             currentRef.removeChild(renderer.domElement);
         }
@@ -75,10 +75,7 @@ const Model = () => {
     }, [])
     return (
         <>
-
-            <div ref={mountRef} style={{ width: '100%', height: '100vh' }}>
-
-            </div>
+            <div ref={mountRef} style={{ width: '100%', height: '100vh' }}></div>
         </>
     )
 
