@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { Color } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { coef, contour, rad } from "./result";
 
@@ -40,19 +39,20 @@ const Model = () => {
                 // agregamos el grupo al arreglo de grupos
                 newCoef.push(grupo);
             }
+            //se hace un recorrido para asignar los datos a la variable radio y posicion 
             for (let i = 0; i < lenght; i++) {
                 const radTemp = rad[i];
                 const position = newCoef[i];
 
-                var sphereGeometry = new THREE.SphereGeometry(radTemp, 30, 30);
-                var sphereMaterial = new THREE.MeshBasicMaterial({
+                var esfera = new THREE.SphereGeometry(radTemp, 30, 30);
+                var material = new THREE.MeshBasicMaterial({
                     color: 0x4499ff,
                     wireframe: true,
                 });
-                var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+                var mallaEsfera = new THREE.Mesh(esfera, material);
 
-                sphere.position.set(position[0], position[1], position[2]);
-                scene.add(sphere);
+                mallaEsfera.position.set(position[0], position[1], position[2]);
+                scene.add(mallaEsfera);
             }
         }
         if (verHojas) {
@@ -65,25 +65,27 @@ const Model = () => {
             }
             const hojas = [];
 
+            //hacemos la division del array por cant hojas (120)
             for (let i = 0; i < contour.length; i += 1026) {
-                // extraemos un grupo de 3 elementos del arreglo original
+
                 const grupo = contour.slice(i, i + 1026);
-                // agregamos el grupo al arreglo de grupos
+
                 hojas.push(grupo);
             }
 
+            //recorrido de asignacion 
             for (let i = 0; i < hojas.length; i++) {
                 const contour = hojas[i];
                 const hoja = [];
+                //pinta geometrias
                 const shape = new THREE.Shape();
-
+                // se divide para quedar con los 513 puntos
                 for (let x = 0; x < contour.length; x += 2) {
-                    // extraemos un grupo de 3 elementos del arreglo original
                     const grupo = contour.slice(x, x + 2);
-                    // agregamos el grupo al arreglo de grupos
                     hoja.push(grupo);
                 }
 
+                //validacion hoja en diferente espacio
                 for (let y = 0; y < hoja.length; y++) {
                     const hja = hoja[y];
                     if (y === 0) {
@@ -95,7 +97,6 @@ const Model = () => {
                 }
                 const extrudeSettings = {
                     depth: 0.1, // Grosor de la hoja
-                    bevelEnabled: false,
                 };
                 const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
 
@@ -108,10 +109,10 @@ const Model = () => {
                 const position = newCoef[i];
 
                 // Creamos la malla (mesh) de la hoja y la agregamos a la escena
-                const leafMesh = new THREE.Mesh(geometry, material);
-                leafMesh.position.set(position[0], position[1], position[2]);
+                const mallaHoja = new THREE.Mesh(geometry, material);
+                mallaHoja.position.set(position[0], position[1], position[2]);
 
-                scene.add(leafMesh);
+                scene.add(mallaHoja);
             }
         }
 
@@ -143,8 +144,8 @@ const Model = () => {
             renderer.setSize(window.innerWidth, window.innerHeight);
 
         }
-        animate();
         window.addEventListener('resize', onWindowResize);
+        animate();
 
         return () => {
             currentRef.removeChild(renderer.domElement);
