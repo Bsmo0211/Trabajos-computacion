@@ -1,3 +1,4 @@
+import * as TWEEN from "@tweenjs/tween.js";
 import { useRef, useEffect } from "react";
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -31,17 +32,16 @@ const Model = () => {
         //creamos el objeto
         var loader = new STLLoader();
         loader.load('/image/WHOMPER.stl', (geometry) => {
-            console.log(geometry);
             var material = new THREE.MeshPhongMaterial({
                 color: 0x4499ff,
             });
             const mesh = new THREE.Mesh(geometry, material);
-            scene.add(mesh);
 
             mesh.position.y = -150
             mesh.position.x = -250
             mesh.position.Z = -3000
             //camera.lookAt(mesh);
+            scene.add(mesh);
 
         });
 
@@ -60,14 +60,21 @@ const Model = () => {
         scene.add(lightbehind);
 
         renderer.render(scene, camera);
-        /*  const animate = () => {
- 
-             controls.update();
-             renderer.render(scene, camera)
-             requestAnimationFrame(animate)
-         }
- 
-         animate(); */
+        const animate = (t) => {
+
+            TWEEN.update(t);
+            window.requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera)
+            requestAnimationFrame(animate)
+        }
+        animate();
+
+        const tween = new TWEEN.Tween({ x: 0, xRotation: 0 }).to({ X: 5, xRotation: Math.PI / 2 }, 2000).onUpdate((coords) => {
+
+        });
+        tween.start();
+
         return () => {
             currentRef.removeChild(renderer.domElement);
         }
