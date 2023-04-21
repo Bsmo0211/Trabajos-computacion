@@ -1,9 +1,9 @@
-import Model3D from "./components/model3d";
+import Model from "./components/model";
 
 const App = () => {
   return (
     <>
-      <Model3D/ >
+      <Model />
     </>
   );
 }

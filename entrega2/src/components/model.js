@@ -6,7 +6,7 @@ import { isEmpty } from "lodash";
 import { Tween } from "tween.js";
 import TWEEN from "tween.js";
 //Subir este
-const Model3D = () => {
+const Model = () => {
   const mountRef = useRef(null);
   const [showSpheres, setShowSpheres] = useState(false);
   const [showHojas, setShowHojas] = useState(false);
@@ -259,4 +259,4 @@ const Model3D = () => {
   );
 };
 
-export default Model3D;
+export default Model;
