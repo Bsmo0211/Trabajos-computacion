@@ -6,7 +6,7 @@ import Model from './components/Model';
 
 function App() {
   useEffect(() => {
-    const test = new Model('myThreeJsCanvas');
+    const test = new Model('Taller Tween');
     test.initialize();
     test.animate();
 
@@ -39,11 +39,12 @@ function App() {
     const tween1 = new TWEEN.Tween({ x: 0, y: 0, xRotation: 0 })
       .to({ x: 5, y: 8, xRotation: Math.PI / 2 }, 2000)
       .onUpdate((coords) => {
+        console.log(coords);
         boxMesh.position.x = coords.x;
         boxMesh.position.y = coords.y;
         boxMesh.rotation.x = coords.xRotation;
       })
-      .easing(TWEEN.Easing.Exponential.InOut)
+      //.easing(TWEEN.Easing.Elastic.InOut)
       .delay(100);
 
     const tween2 = new TWEEN.Tween({ x: 5, y: 8, xRotation: Math.PI / 2 })
@@ -53,7 +54,7 @@ function App() {
         boxMesh.position.y = coords.y;
         boxMesh.rotation.x = coords.xRotation;
       })
-      .easing(TWEEN.Easing.Linear.None)
+
       .delay(100);
     tween1.chain(tween2);
     tween2.chain(tween1);
@@ -62,7 +63,7 @@ function App() {
 
   return (
     <div>
-      <canvas id="myThreeJsCanvas" />
+      <canvas id="Taller Tween" />
     </div>
   );
 }
