@@ -5,6 +5,7 @@ import { coef, contour, rad, coef2, coef3 } from "../data";
 import { isEmpty } from "lodash";
 import { Tween } from "tween.js";
 import TWEEN from "tween.js";
+import Stats from 'three/examples/jsm/libs/stats.module';
 //Subir este
 const Model = () => {
   const mountRef = useRef(null);
@@ -214,6 +215,8 @@ const Model = () => {
       light.position.set(8, 8, 8);
       scene.add(light);
 
+
+
       const animate = () => {
         controls.update();
         renderer.render(scene, camera);
@@ -229,21 +232,34 @@ const Model = () => {
 
   return (
     <>
-      <button onClick={() => mover1(1)}>posición 1</button>
-      <button onClick={() => mover1(2)}>posición 2</button>
-      <button onClick={() => mover1(3)}>posición 3</button>
+      <button onClick={() => mover1(1)} style={{ backgroundColor: 'red', color: 'white' }}>posición 1</button>
+      <button onClick={() => mover1(2)} style={{ backgroundColor: 'green', color: 'white' }}>posición 2</button>
+      <button onClick={() => mover1(3)} style={{ backgroundColor: 'blue', color: 'white' }}>posición 3</button>
+
       <input
         value={laVelociti}
         onChange={(e) => setLaVelociti(e.target.value)}
+        style={{ fontSize: '16px', borderColor: 'red', width: '200px' }}
       />
+
       <button
         onClick={() => {
           if (showHojas) {
             setRefHojas([]);
           }
           setShowHojas(!showHojas);
-        }}>
-        {showHojas ? "Desactivar hojas" : "activar hojas"}{" "}
+        }}
+        style={{
+          backgroundColor: 'blue',
+          color: 'white',
+          border: 'none',
+          padding: '5px',
+          borderRadius: '3px',
+          marginRight: '10px',
+          paddingLeft: '10px ',
+        }}
+      >
+        {showHojas ? "Desactivar hojas" : "Activar hojas"}{" "}
       </button>
       <button
         onClick={() => {
@@ -251,8 +267,17 @@ const Model = () => {
             setRefSpheres([]);
           }
           setShowSpheres(!showSpheres);
-        }}>
-        {showSpheres ? "Desactivar esferas" : "activar esferas"}{" "}
+        }}
+        style={{
+          backgroundColor: 'red',
+          color: 'white',
+          border: 'none',
+          padding: '5px',
+
+          borderRadius: '3px'
+        }}
+      >
+        {showSpheres ? "Desactivar esferas" : "Activar esferas"}{" "}
       </button>
       <div ref={mountRef} style={{ width: "100%", height: "100vh" }}></div>
     </>
